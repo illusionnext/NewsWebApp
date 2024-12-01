@@ -4,13 +4,19 @@ export default function News() {
   return (
     <ul>
       <li>
-        <Link href="/news/first-data">First Dummy Data</Link>
+        <Link href="/news/aiRobot">AI Robot</Link>
       </li>
       <li>
-        <Link href="/news/second-data">Second Dummy Data</Link>
+        <Link href="/news/beaver">Beaver</Link>
       </li>
       <li>
-        <Link href="/news/third-data">Third Dummy Data</Link>
+        <Link href="/news/coupleCooking">Couple Cooking</Link>
+      </li>
+      <li>
+        <Link href="/news/hiking">Hiking</Link>
+      </li>
+      <li>
+        <Link href="/news/landscape">Landscape</Link>
       </li>
     </ul>
   );
