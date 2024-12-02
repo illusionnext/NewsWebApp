@@ -20,9 +20,15 @@ export default async function NewsSlug({
     notFound();
   } else {
     return (
-      <section id="news-slug">
+      <section>
         <h1>{newsPicture.name}</h1>
-        <Image src={newsPicture.src} alt={newsPicture.alt} />
+        <Image
+          width={400}
+          height={300}
+          src={newsPicture.src}
+          alt={newsPicture.alt}
+          priority
+        />
       </section>
     );
   }

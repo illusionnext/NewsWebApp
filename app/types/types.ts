@@ -5,3 +5,12 @@ export interface pictureTypes {
   src: StaticImageData;
   alt: string;
 }
+
+export interface newsTypes {
+  id: number;
+  slug: string;
+  title: string;
+  image: string;
+  date: string;
+  content: string;
+}

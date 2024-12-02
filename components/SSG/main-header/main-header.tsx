@@ -4,18 +4,20 @@ import Logo from "@/assets/logo.jpg";
 
 export default function MainHeader() {
   return (
-    <header>
-      <ul>
-        <li>
-          <Link href="/">
-            {" "}
-            <Image width={50} height={50} src={Logo} alt="Logo" />
-          </Link>
-        </li>
-        <li>
-          <Link href="/news">News</Link>
-        </li>
-      </ul>
+    <header id="main-header">
+      <section id="logo">
+        <Link href="/">
+          {" "}
+          <Image width={30} height={30} src={Logo} alt="Logo" />
+        </Link>
+      </section>
+      <nav>
+        <ul>
+          <li>
+            <Link href="/news">News</Link>
+          </li>
+        </ul>
+      </nav>
     </header>
   );
 }
