@@ -17,6 +17,7 @@ export default function Page() {
                 alt={news.content}
               />
             </Link>
+            <span>{news.title}</span>
           </li>
         ))}
       </ul>

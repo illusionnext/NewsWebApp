@@ -1,4 +1,4 @@
-import { newsTypes } from "@/app/types/types";
+import { newsTypes } from "@/types/types";
 
 export const dummyNews: newsTypes[] = [
   {

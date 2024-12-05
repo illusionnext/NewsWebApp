@@ -1,7 +1,8 @@
-import { newsPictures } from "@/components/SSG/pictures/pictures";
-import { pictureTypes } from "@/app/types/types";
+import { newsTypes } from "@/types/types";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import classes from "./page.module.css";
+import { dummyNews } from "@/components/SSG/dummy-data/dummyNews";
 
 export default async function NewsSlug({
   params,
@@ -11,25 +12,29 @@ export default async function NewsSlug({
   const { slug } = await params;
   console.log({ slug });
 
-  // Find the picture that matches the slug
-  const newsPicture: pictureTypes | undefined = newsPictures.find(
-    (picture) => picture.name === slug,
+  // Find the item that matches the slug
+  const newsItem: newsTypes | undefined = dummyNews.find(
+    (item) => item.slug === slug,
   );
 
-  if (!newsPicture) {
+  if (!newsItem) {
     notFound();
   } else {
     return (
-      <section>
-        <h1>{newsPicture.name}</h1>
-        <Image
-          width={400}
-          height={300}
-          src={newsPicture.src}
-          alt={newsPicture.alt}
-          priority
-        />
-      </section>
+      <article className={classes["news-article"]}>
+        <header>
+          <Image
+            width={700}
+            height={400}
+            src={`/images/news/${newsItem.image}`}
+            alt={newsItem.title}
+            priority
+          />
+          <h1>{newsItem.title}</h1>
+          <time dateTime={newsItem.date}>{newsItem.date}</time>
+        </header>
+        <p>{newsItem.content}</p>
+      </article>
     );
   }
 }

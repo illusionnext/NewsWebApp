@@ -1,0 +1,13 @@
+.news-article {
+  display: grid;
+  place-content: center;
+  place-items: center;
+  gap: 1rem;
+
+  & img {
+    box-shadow: 0 0 10px 0 #fff;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+  }
+}
