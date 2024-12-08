@@ -1,26 +1,11 @@
-import Link from "next/link";
 import { dummyNews } from "@/components/SSG/dummy-data/dummyNews";
-import Image from "next/image";
+import NewsList from "@/components/SSG/news-list/news-list";
 
-export default function Page() {
+export default function NewsPage() {
   return (
     <>
       <h1>News Page</h1>
-      <ul className="news-list">
-        {dummyNews.map((news) => (
-          <li key={news.id}>
-            <Link href={`/news/${news.slug}`}>
-              <Image
-                width={300}
-                height={200}
-                src={`/images/news/${news.image}`}
-                alt={news.content}
-              />
-            </Link>
-            <span>{news.title}</span>
-          </li>
-        ))}
-      </ul>
+      <NewsList news={dummyNews} />
     </>
   );
 }

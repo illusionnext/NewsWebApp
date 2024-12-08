@@ -8,13 +8,16 @@ export default function MainHeader() {
       <section id="logo">
         <Link href="/">
           {" "}
-          <Image width={30} height={30} src={Logo} alt="Logo" />
+          <Image width={40} height={40} src={Logo} alt="Logo" />
         </Link>
       </section>
       <nav>
         <ul>
           <li>
             <Link href="/news">News</Link>
+          </li>
+          <li>
+            <Link href="/archive">Archive</Link>
           </li>
         </ul>
       </nav>
