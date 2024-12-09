@@ -49,6 +49,8 @@ ul {
   }
 }
 
+
+
 #main-header #logo a,
 #main-header #logo a:hover {
   color: #e1e1d7;
@@ -72,6 +74,7 @@ ul {
 #main-header ul a.active {
   background-color: #bcbcb7;
   color: #181817;
+  box-shadow: 0 0 1.25rem /* 20/16 */ 0 #b0e0e6;
 }
 
 #home {

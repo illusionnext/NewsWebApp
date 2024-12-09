@@ -14,7 +14,7 @@ export default async function FilteredNewsPage({
   params: Promise<{ filter?: string[] }>;
 }) {
   const { filter } = await params;
-  console.dir("filter[] 👇");
+  console.dir("filter?:string[] 👇");
   console.dir(filter);
 
   const filterLength = filter?.length || 0;
