@@ -6,40 +6,76 @@ import {
 } from "@/lib/newsDate";
 import NewsList from "@/components/SSG/news-list/news-list";
 import Link from "next/link";
+import { newsTypes } from "@/types/types";
 
 export default async function FilteredNewsPage({
   params,
 }: {
-  params: Promise<{ filter?: string | string[] }>;
+  params: Promise<{ filter?: string[] }>;
 }) {
-  // filter => /archive , /archive/2024 , /archive/2024/november
-  // [[...filter]] can catch all the segments after comes /archive. So no need to declare extra page.tsx after @archive 😉
-
   const { filter } = await params;
-  console.warn("filter[] 👇");
+  console.dir("filter[] 👇");
   console.dir(filter);
 
-  const selectedYear = Number(filter?.[0]),
-    selectedMonth = Number(filter?.[1]);
+  const filterLength = filter?.length || 0;
 
-  let news,
-    links = getAvailableNewsYears();
+  // Validate the filter structure
+  if (filterLength > 2) {
+    throw new Error("Invalid filter: Too many segments");
+  }
 
-  if (selectedYear && !selectedMonth) {
+  // Parse and validate year and month strictly as numbers
+  const selectedYear: number | null =
+    filter?.[0] && /^\d+$/.test(filter[0]) ? Number(filter[0]) : null;
+  const selectedMonth: number | null =
+    filter?.[1] && /^\d+$/.test(filter[1]) ? Number(filter[1]) : null;
+
+  if (filter?.[0] && selectedYear === null) {
+    throw new Error("Invalid year: Must be a positive integer");
+  }
+
+  if (
+    filter?.[1] &&
+    (selectedMonth === null || selectedMonth < 1 || selectedMonth > 12)
+  ) {
+    throw new Error(
+      "Invalid month: Must be a positive integer between 1 and 12",
+    );
+  }
+
+  // Validate year and month against available data
+  const availableYears = getAvailableNewsYears();
+  if (selectedYear !== null && !availableYears.includes(selectedYear)) {
+    throw new Error("Invalid year: Not found in available years");
+  }
+
+  if (
+    selectedYear !== null &&
+    selectedMonth !== null &&
+    !getAvailableNewsMonths(selectedYear).includes(selectedMonth)
+  ) {
+    throw new Error("Invalid month: Not found in available months");
+  }
+
+  // Fetch news and links
+  let news: newsTypes[] | null = null;
+  let links: number[] = [];
+  if (selectedYear === null) {
+    links = availableYears;
+  } else if (selectedMonth === null) {
     news = getNewsForYear(selectedYear);
     links = getAvailableNewsMonths(selectedYear);
-  }
-
-  if (selectedYear && selectedMonth) {
+  } else {
     news = getNewsForYearAndMonth(selectedYear, selectedMonth);
-    links = [];
   }
 
-  let newsContent = <p>No News found for the selected period</p>;
-
-  if (news && news.length > 0) {
-    newsContent = <NewsList news={news} />;
-  }
+  // Render news content
+  const newsContent =
+    news && news.length > 0 ? (
+      <NewsList news={news} />
+    ) : (
+      <p>No News found for the selected period</p>
+    );
 
   return (
     <>
