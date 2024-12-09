@@ -22,55 +22,44 @@ export default async function FilteredNewsPage({
   const selectedYear = Number(filter?.[0]),
     selectedMonth = Number(filter?.[1]);
 
-  let newsYear;
+  let news,
+    links = getAvailableNewsYears();
+
   if (selectedYear && !selectedMonth) {
-    newsYear = getNewsForYear(selectedYear);
+    news = getNewsForYear(selectedYear);
+    links = getAvailableNewsMonths(selectedYear);
   }
 
-  let newsContentYear = <p>No News found for the selected period</p>;
-
-  if (newsYear && newsYear.length > 0) {
-    newsContentYear = <NewsList news={newsYear} />;
-  }
-
-  const links = getAvailableNewsYears();
-
-  let newsMonth;
   if (selectedYear && selectedMonth) {
-    newsMonth = getNewsForYearAndMonth(selectedYear, selectedMonth);
+    news = getNewsForYearAndMonth(selectedYear, selectedMonth);
+    links = [];
   }
 
-  let newsMonthContent = <p>No News found for the selected period</p>;
+  let newsContent = <p>No News found for the selected period</p>;
 
-  if (newsMonth && newsMonth.length > 0) {
-    newsMonthContent = <NewsList news={newsMonth} />;
+  if (news && news.length > 0) {
+    newsContent = <NewsList news={news} />;
   }
-
-  const months = getAvailableNewsMonths(selectedYear);
-
-  // const news = getNewsForYear(newsYear);
-  // return <NewsList news={news} />;
 
   return (
     <>
       <header id="archive-header">
         <nav>
           <ul>
-            {links.map((year) => (
-              <li key={year}>
-                <Link href={`/archive/${year}`}>{year}</Link>
-              </li>
-            ))}
-            {months.map((month) => (
-              <li key={month}>
-                <Link href={`/archive/${month}`}>{month}</Link>
-              </li>
-            ))}
+            {links.map((link) => {
+              const href = selectedYear
+                ? `/archive/${selectedYear}/${link}`
+                : `/archive/${link}`;
+              return (
+                <li key={link}>
+                  <Link href={href}>{link}</Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </header>
-      <section id="archive-content">{newsContentYear}</section>
-      <section id="archive-content">{newsMonthContent}</section>
+      <section id="archive-content">{newsContent}</section>
     </>
   );
 }
