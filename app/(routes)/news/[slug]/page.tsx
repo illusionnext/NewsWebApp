@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import classes from "./page.module.css";
 import { dummyNews } from "@/components/SSG/dummy-data/dummyNews";
+import Link from "next/link";
 
 export default async function NewsSlug({
   params,
@@ -23,13 +24,15 @@ export default async function NewsSlug({
     return (
       <article className={classes["news-article"]}>
         <header>
-          <Image
-            width={700}
-            height={400}
-            src={`/images/news/${newsItem.image}`}
-            alt={newsItem.title}
-            priority
-          />
+          <Link href={`/news/${newsItem.slug}/image`}>
+            <Image
+              width={700}
+              height={400}
+              src={`/images/news/${newsItem.image}`}
+              alt={newsItem.title}
+              priority
+            />
+          </Link>
           <h1>{newsItem.title}</h1>
           <time dateTime={newsItem.date}>{newsItem.date}</time>
         </header>
