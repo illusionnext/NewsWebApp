@@ -4,13 +4,14 @@ import { notFound } from "next/navigation";
 import classes from "./page.module.css";
 import { dummyNews } from "@/components/SSG/dummy-data/dummyNews";
 import Link from "next/link";
+import { use } from "react";
 
-export default async function NewsSlug({
+export default function NewsSlug({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
+  const { slug } = use(params); // I used 'use' hook to resolve the promise without added await and async. It is a new feature in React 19.
   console.log({ slug });
 
   // Find the item that matches the slug

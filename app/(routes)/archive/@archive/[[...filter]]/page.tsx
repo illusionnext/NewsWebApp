@@ -7,13 +7,14 @@ import {
 import NewsList from "@/components/SSG/news-list/news-list";
 import Link from "next/link";
 import { newsTypes } from "@/types/types";
+import { use } from "react";
 
-export default async function FilteredNewsPage({
+export default function FilteredNewsPage({
   params,
 }: {
   params: Promise<{ filter?: string[] }>;
 }) {
-  const { filter } = await params;
+  const { filter } = use(params); // I used 'use' hook to resolve the promise without added await and async. It is a new feature in React 19.
   console.dir("filter?:string[] 👇");
   console.dir(filter);
 
