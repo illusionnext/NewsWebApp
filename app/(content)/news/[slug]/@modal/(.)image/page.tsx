@@ -11,6 +11,7 @@ export default function InterceptedImagePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  console.dir("Intercepted Image Page");
   const router = useRouter();
 
   // Use the `use` API to resolve the params promise
@@ -22,25 +23,24 @@ export default function InterceptedImagePage({
 
   if (!newsItem) {
     notFound();
-    return null; // Prevent rendering further
+  } else {
+    return (
+      <>
+        <section className={classes["modal-backdrop"]} onClick={router.back}>
+          <dialog className={classes.modal} open>
+            <section className={classes["fullscreen-image"]}>
+              <Image
+                width={900}
+                height={700}
+                src={`/images/news/${newsItem.image}`}
+                alt={newsItem.title}
+              />
+            </section>
+          </dialog>
+        </section>
+      </>
+    );
   }
-
-  return (
-    <>
-      <section className={classes["modal-backdrop"]} onClick={router.back}>
-        <dialog className={classes.modal} open>
-          <section className={classes["fullscreen-image"]}>
-            <Image
-              width={900}
-              height={700}
-              src={`/images/news/${newsItem.image}`}
-              alt={newsItem.title}
-            />
-          </section>
-        </dialog>
-      </section>
-    </>
-  );
 }
 
 //When you call use(params), React reads the resolved value of the params promise.
