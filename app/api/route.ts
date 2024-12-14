@@ -4,6 +4,7 @@ import { use } from "react";
 // Handles GET requests
 export function GET() {
   const response = use(fetch("/api/get-endpoint").then((res) => res.json()));
+
   return NextResponse.json({
     message: "This is a GET response",
     data: response,
