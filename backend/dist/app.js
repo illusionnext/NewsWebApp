@@ -45,21 +45,53 @@ const dummyNews = [
 ];
 const db = sqlite("data.db");
 function initDb() {
-    db.prepare("CREATE TABLE IF NOT EXISTS news (id INTEGER PRIMARY KEY, slug TEXT UNIQUE, title TEXT, content TEXT, date TEXT, image TEXT)").run();
-    // Explicitly type the result of the count query
-    const { count } = db.prepare("SELECT COUNT(*) as count FROM news").get();
-    if (count === 0) {
-        const insert = db.prepare("INSERT INTO news (slug, title, content, date, image) VALUES (?, ?, ?, ?, ?)");
-        dummyNews.forEach((news) => {
-            insert.run(news.slug, news.title, news.content, news.date, news.image);
-        });
+    try {
+        // Create table if not exists
+        db.prepare(`CREATE TABLE IF NOT EXISTS news (
+        id INTEGER PRIMARY KEY,
+        slug TEXT UNIQUE,
+        title TEXT,
+        content TEXT,
+        date TEXT,
+        image TEXT
+      )`).run();
+        // Check if dummy data is needed
+        const { count } = db
+            .prepare("SELECT COUNT(*) as count FROM news")
+            .get();
+        if (count === 0) {
+            // Batch insert dummy data
+            const insert = db.prepare("INSERT INTO news (slug, title, content, date, image) VALUES (?, ?, ?, ?, ?)");
+            const insertMany = db.transaction((data) => {
+                data.forEach((news) => insert.run(news.slug, news.title, news.content, news.date, news.image));
+            });
+            insertMany(dummyNews);
+            console.log("Dummy data inserted into the database.");
+        }
+    }
+    catch (error) {
+        console.error("Error initializing the database:", error.message);
+        throw error;
     }
 }
 const app = express();
+const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.get("/news", (req, res) => {
-    const news = db.prepare("SELECT * FROM news").all();
-    res.json(news);
+    try {
+        const news = db.prepare("SELECT * FROM news").all();
+        res.status(200).json(news);
+    }
+    catch (error) {
+        res.status(500).json({ error: "Failed to fetch news." });
+    }
 });
-initDb();
-app.listen(8080);
+try {
+    initDb();
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}
+catch (error) {
+    console.error("Backend failed to initialize:", error.message);
+}
