@@ -1,44 +1,16 @@
-"use client";
-
-import { useState, useEffect } from "react";
+// import { use } from "react";
 import NewsList from "@/components/SSG/news-list/news-list";
+import { getAllNews } from "@/lib/news";
+import { newsTypes } from "@/types/types";
 
 export default function NewsPage() {
-  const [state, setState] = useState({
-    loading: false,
-    error: "",
-    news: [],
-  });
+  // const response = use(fetch("http://localhost:8080/news"));
+  // if (!response.ok) {
+  //   throw new Error("Failed to fetch news.");
+  // }
+  // const news = use(response.json());
 
-  useEffect(() => {
-    const fetchNews = async () => {
-      setState((prev) => ({ ...prev, loading: true }));
-
-      try {
-        const response = await fetch("http://localhost:8080/news");
-        if (!response.ok) {
-          throw new Error("Failed to fetch news!");
-        }
-
-        const news = await response.json();
-        setState({ loading: false, error: "", news });
-      } catch (error) {
-        setState({ loading: false, error: error.message, news: [] });
-      }
-    };
-
-    fetchNews();
-  }, []);
-
-  const { loading, error, news } = state;
-
-  if (loading) {
-    return <p>News is Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  const news: newsTypes[] = getAllNews();
 
   return (
     <>

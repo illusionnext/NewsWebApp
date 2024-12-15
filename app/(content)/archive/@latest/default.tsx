@@ -1,4 +1,4 @@
-import { getLatestNews } from "@/lib/newsDate";
+import { getLatestNews } from "@/lib/news";
 import NewsList from "@/components/SSG/news-list/news-list";
 
 export default function LatestNewsPage() {

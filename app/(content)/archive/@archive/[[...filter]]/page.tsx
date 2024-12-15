@@ -3,7 +3,7 @@ import {
   getNewsForYear,
   getAvailableNewsMonths,
   getNewsForYearAndMonth,
-} from "@/lib/newsDate";
+} from "@/lib/news";
 import NewsList from "@/components/SSG/news-list/news-list";
 import Link from "next/link";
 import { newsTypes } from "@/types/types";
