@@ -7,14 +7,14 @@ import {
 import NewsList from "@/components/SSG/news-list/news-list";
 import Link from "next/link";
 import { newsTypes } from "@/types/types";
-import { use } from "react";
+import { Suspense, use } from "react";
 
 export default function FilteredNewsPage({
   params,
 }: {
   params: Promise<{ filter?: string[] }>;
 }) {
-  const { filter } = use(params); // I used 'use' hook to resolve the promise without added await and async. It is a new feature in React 19.
+  const { filter } = use(params);
   console.dir("filter?:string[] 👇");
   console.dir(filter);
 
@@ -45,7 +45,7 @@ export default function FilteredNewsPage({
   }
 
   // Validate year and month against available data
-  const availableYears = getAvailableNewsYears();
+  const availableYears = use(getAvailableNewsYears());
   if (selectedYear !== null && !availableYears.includes(selectedYear)) {
     throw new Error("Invalid year: Not found in available years");
   }
@@ -53,7 +53,7 @@ export default function FilteredNewsPage({
   if (
     selectedYear !== null &&
     selectedMonth !== null &&
-    !getAvailableNewsMonths(selectedYear).includes(selectedMonth)
+    !use(getAvailableNewsMonths(selectedYear)).includes(selectedMonth)
   ) {
     throw new Error("Invalid month: Not found in available months");
   }
@@ -64,10 +64,10 @@ export default function FilteredNewsPage({
   if (selectedYear === null) {
     links = availableYears;
   } else if (selectedMonth === null) {
-    news = getNewsForYear(selectedYear);
-    links = getAvailableNewsMonths(selectedYear);
+    news = use(getNewsForYear(selectedYear));
+    links = use(getAvailableNewsMonths(selectedYear));
   } else {
-    news = getNewsForYearAndMonth(selectedYear, selectedMonth);
+    news = use(getNewsForYearAndMonth(selectedYear, selectedMonth));
   }
 
   // Render news content
@@ -79,7 +79,13 @@ export default function FilteredNewsPage({
     );
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <p style={{ textAlign: "center", marginTop: "2rem" }}>
+          Archive Files By Years Are Being Loaded...
+        </p>
+      }
+    >
       <header id="archive-header">
         <nav>
           <ul>
@@ -97,6 +103,6 @@ export default function FilteredNewsPage({
         </nav>
       </header>
       <section id="archive-content">{newsContent}</section>
-    </>
+    </Suspense>
   );
 }

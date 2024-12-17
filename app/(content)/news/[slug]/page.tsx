@@ -2,22 +2,20 @@ import { newsTypes } from "@/types/types";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import classes from "./page.module.css";
-import { dummyNews } from "@/components/SSG/dummy-data/dummyNews";
 import Link from "next/link";
 import { use } from "react";
+import { getNewsItem } from "@/lib/news";
 
 export default function NewsSlug({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = use(params); // I used 'use' hook to resolve the promise without added await and async. It is a new feature in React 19.
-  console.log({ slug });
-
-  // Find the item that matches the slug
-  const newsItem: newsTypes | undefined = dummyNews.find(
-    (item) => item.slug === slug,
-  );
+  // Resolving params and the single news item with 'use' hook
+  const { slug } = use(params),
+    newsItem = use(getNewsItem(slug)) as newsTypes;
+  console.dir("Were are on the news slug page 📃");
+  console.dir({ slug });
 
   if (!newsItem) {
     notFound();

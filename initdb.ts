@@ -113,3 +113,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
+
+// npx tsc --init
+// npx tsc initdb.ts --outDir ./dist --target esnext

@@ -1,8 +1,9 @@
 import { getLatestNews } from "@/lib/news";
 import NewsList from "@/components/SSG/news-list/news-list";
+import { use } from "react";
 
 export default function LatestNewsPage() {
-  const latestNews = getLatestNews();
+  const latestNews = use(getLatestNews());
 
   return (
     <>
