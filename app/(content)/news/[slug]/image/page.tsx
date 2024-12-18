@@ -18,8 +18,8 @@ export default function ImagePage({
     return (
       <section className={classes["fullscreen-image"]}>
         <Image
-          width={900}
-          height={700}
+          width={800}
+          height={600}
           src={`/images/news/${newsItem.image}`}
           alt={newsItem.title}
         />

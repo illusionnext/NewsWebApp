@@ -6,8 +6,20 @@ import classes from "./page.module.css";
 export default function Home() {
   return (
     <div id={classes.home}>
-      <Image width={250} height={250} src={Logo} alt="A newspaper" priority />
-      <h1>A News Site For The Next Generation</h1>
+      <Image width={200} height={200} src={Logo} alt="A newspaper" priority />
+      <h1>
+        A News Site For The{" "}
+        <strong
+          style={{
+            background: "linear-gradient(to right, gold, gold)", // Makes gold color
+            WebkitBackgroundClip: "text", // Clips background to text
+            WebkitTextFillColor: "transparent", // Ensures text is transparent
+            textShadow: "0 0 10px #fff", // White glow around the text
+          }}
+        >
+          Next Generations!
+        </strong>
+      </h1>
       <p>
         Next News is here to deliver you all the latest news - concise &
         unbiased!

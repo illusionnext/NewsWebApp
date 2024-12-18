@@ -1,3 +1,3 @@
 export default function Loading() {
-  return <p>Archive Files Are Being Loading ...</p>;
+  return <p>Latest News Contents Are Being Loading...</p>;
 }
