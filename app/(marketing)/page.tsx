@@ -1,9 +1,10 @@
+"use cache";
 import Logo from "@/assets/logo.jpg";
 import Link from "next/link";
 import Image from "next/image";
 import classes from "./page.module.css";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div id={classes.home}>
       <Image width={200} height={200} src={Logo} alt="A newspaper" priority />

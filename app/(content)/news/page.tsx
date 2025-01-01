@@ -1,10 +1,11 @@
+"use cache";
 import NewsList from "@/components/SSG/news-list/news-list";
 import { getAllNews } from "@/lib/news";
 import { newsTypes } from "@/types/types";
-import { use } from "react";
+// import { use } from "react";
 
-export default function NewsPage() {
-  const news: newsTypes[] = use(getAllNews());
+export default async function NewsPage() {
+  const news: newsTypes[] = await getAllNews();
 
   return (
     <>
