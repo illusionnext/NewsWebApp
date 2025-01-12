@@ -1,4 +1,4 @@
-"use cache";
+// "use cache";
 import Logo from "@/assets/logo.jpg";
 import Link from "next/link";
 import Image from "next/image";

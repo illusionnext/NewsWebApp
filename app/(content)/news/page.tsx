@@ -1,4 +1,4 @@
-"use cache";
+// "use cache";
 import NewsList from "@/components/SSG/news-list/news-list";
 import { getAllNews } from "@/lib/news";
 import { newsTypes } from "@/types/types";

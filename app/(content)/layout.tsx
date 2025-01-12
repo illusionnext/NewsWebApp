@@ -6,7 +6,7 @@ export const metadata = {
   description: "Learn how to route to different pages.",
 };
 
-export const experimental_ppr = true;
+// export const experimental_ppr = true;
 
 export default function ContentLayout({
   children,

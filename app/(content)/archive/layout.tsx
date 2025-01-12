@@ -1,6 +1,6 @@
 import React from "react";
 
-export const experimental_ppr = true;
+// export const experimental_ppr = true;
 
 export default async function ArchiveLayout({
   archive,
@@ -9,7 +9,7 @@ export default async function ArchiveLayout({
   archive: React.ReactNode;
   latest: React.ReactNode;
 }) {
-  "use cache";
+  // "use cache";
   return (
     <>
       <h1>News Archive</h1>
